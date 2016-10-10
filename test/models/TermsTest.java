@@ -2,16 +2,49 @@ package models;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+
+
 
 public class TermsTest
 {
-
-	@Test
-	public void test()
+	private Terms terms;
+	
+	@Before
+	public void setup()
 	{
-		//test the getter
-		//test if the first word is the same as expected and weight
+		terms = new Terms();
+	}
+	
+	@After
+	public void tearDown()
+	{
+		terms = null;
+	}
+	
+	@Test
+	public void testTermsEmpty()
+	{
+		assertEquals(terms.getAllTerms().size(), 0);
+	}
+	
+	@Test
+	public void testTerms()
+	{
+		terms.readTerms();
+		
+		assertEquals(terms.getTerm(0), "3395006400	of"); //tab as delimiter 
+		assertNotEquals(terms.getTerm(0), "3395006400 of"); //space as delimiter 
+		//assertEquals(terms.getAllTerms().size(), 10000);
+		
+		List<String> testTerms = new ArrayList<>();
+		testTerms = terms.getAllTerms();
+		assertEquals(testTerms.size(), terms.getAllTerms().size());
 	}
 
 }
