@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.List;
+
 import models.Terms;
 
 public class BruteAutocomplete implements Autocomplete
@@ -9,13 +11,21 @@ public class BruteAutocomplete implements Autocomplete
 	
 	public BruteAutocomplete() throws IllegalArgumentException
 	{
-		
+		terms.readTerms();
 	}
+	
 	@Override
 	public double weightOf(String term)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		for (int i=0; i<terms.getTermsSize(); i++)	
+		{
+			if (terms.getTerm(i).contains(term))
+			{
+				String[] tokens = terms.getTerm(i).split("	");
+				return Double.parseDouble(tokens[0]); 
+			}
+		}
+		return 0.0;
 	}
 
 	@Override

@@ -24,13 +24,13 @@ public class TermsTest
 	@After
 	public void tearDown()
 	{
-		terms = null;
+		terms.getAllTerms().clear();
 	}
 	
 	@Test
 	public void testTermsEmpty()
 	{
-		assertEquals(terms.getAllTerms().size(), 0);
+		assertEquals(terms.getTermsSize(), 0);
 	}
 	
 	@Test
@@ -38,7 +38,7 @@ public class TermsTest
 	{
 		terms.readTerms();
 		
-		assertEquals(terms.getTerm(0), "3395006400	of"); //tab as delimiter 
+		assertEquals(terms.getTerm(0), "5627187200	the"); //tab as delimiter 
 		assertNotEquals(terms.getTerm(0), "3395006400 of"); //space as delimiter 
 		//assertEquals(terms.getAllTerms().size(), 10000);
 		

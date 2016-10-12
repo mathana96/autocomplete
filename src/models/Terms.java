@@ -46,6 +46,11 @@ public class Terms
 		return allTerms;
 	}
 	
+	public int getTermsSize()
+	{
+		return allTerms.size();
+	}
+	
 	public String getTerm(int i)
 	{
 		return allTerms.get(i);
