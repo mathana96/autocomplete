@@ -16,11 +16,14 @@ import controllers.BruteAutocomplete;
 public class BruteAutocompleteTest
 {
 	private BruteAutocomplete brute;
+	TermList termList;
+	String testpath = "././data/termsTest.txt";
 	
 	@Before
 	public void setup()
 	{
-		brute = new BruteAutocomplete();
+		brute = new BruteAutocomplete(testpath);
+	  termList = new TermList(testpath);
 	}
 	
 	@After
@@ -55,19 +58,30 @@ public class BruteAutocompleteTest
 	}
 	
 	@Test
-	public void testMatches()
+	public void testMatches1()
 	{
 		String prefix = "hel";
 		int k = 3;
 		Iterable<String> tmiterable = brute.matches(prefix, k);
 		List<String> tmlist = Lists.newArrayList(tmiterable);
 		assertEquals(tmlist.toString(), "[help, hell, hello]");
+		
+		String prefix2 = "hex";
+		int k2 = 5;
+		Iterable<String> tmiterable2 = brute.matches(prefix2, k2);
+		List<String> tmlist2 = Lists.newArrayList(tmiterable2);
+		assertEquals(tmlist2.toString(), "[hexagon]");
 	}
-//
-//	private void assertArrayEquals(Iterable<String> matches, String string)
-//	{
-//		// TODO Auto-generated method stub
-//		
-//	}
+	
+	public void testMatches2()
+	{
+		
+		String prefix2 = "sat";
+		int k2 = 5;
+		Iterable<String> tmiterable2 = brute.matches(prefix2, k2);
+		List<String> tmlist2 = Lists.newArrayList(tmiterable2);
+		assertEquals(tmlist2.toString(), "[satchel]");
+	}
+
 
 }

@@ -13,12 +13,14 @@ import org.junit.Test;
 
 public class TermListTest
 {
-	private TermList termList;
+	
+	TermList termList;
+	String testpath = "././data/termsTest.txt";
 	
 	@Before
 	public void setup()
 	{
-		termList = new TermList();
+		termList = new TermList(testpath);
 	}
 	
 	@After
@@ -27,22 +29,16 @@ public class TermListTest
 		termList.getAllTerms().clear();
 	}
 	
-	@Test
-	public void testTermsEmpty()
-	{
-		assertEquals(termList.getTermsSize(), 0);
-	}
 	
 	@Test
 	public void testTerms()
 	{
-		termList.readTerms();
 		
-		assertEquals(termList.getTerm(0).weight, 5627187200.0, 0.01); //tab as delimiter 
-		assertEquals(termList.getTerm(0).theTerm, "the"); //tab as delimiter 
+		assertEquals(termList.getTerm(0).weight, 999990.0, 0.01); //tab as delimiter 
+		assertEquals(termList.getTerm(0).theTerm, "bummer"); //tab as delimiter 
 
-		//assertNotEquals(termList.getTerm(0), "3395006400 of"); //space as delimiter 
-		//assertEquals(terms.getAllTerms().size(), 10000);
+		assertNotEquals(termList.getTerm(5), "00000 headlamp"); //space as delimiter 
+		assertEquals(termList.getAllTerms().size(), 11);
 		
 		List<Term> testTerms = new ArrayList<>();
 		testTerms = termList.getAllTerms();

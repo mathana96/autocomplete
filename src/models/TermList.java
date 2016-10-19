@@ -20,20 +20,12 @@ public class TermList// implements Comparable<TermList>
 	
 	private List<Term> allTerms; 
 	Comparator<Term> weightcomp = new TermByWeightComparator();
-	Term term; 
-	String path = "././data/terms.txt";
-	String testpath = "././data/termsTest.txt";
 	
-	public TermList()
+	public TermList(String path)
 	{
 		allTerms = new ArrayList<>();
-		//term = new Term();
-	}
 	
-	public void readTerms () 
-	{
-		
-		File termsFile = new File(testpath); //The file
+		File termsFile = new File(path); //The file
 		Scanner rawTerms = null;
 		try
 		{
@@ -47,7 +39,7 @@ public class TermList// implements Comparable<TermList>
 		// While there is a next term..
 		while (rawTerms.hasNextLine())
 		{
-			term = new Term();
+			Term term = new Term();
 			String[] tokens = rawTerms.nextLine().split(term.delimiter);
 			term.weight = Double.parseDouble(tokens[0]);
 			term.theTerm = tokens[1];

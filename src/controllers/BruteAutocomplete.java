@@ -16,13 +16,16 @@ import models.TermList;
 public class BruteAutocomplete implements Autocomplete
 {
 	
-	TermList terms = new TermList();
-	Iterator<Term> sweep;// = terms.getAllTerms();//.iterator();
+	//String path = "././data/terms.txt";
+	//String testpath = "././data/termsTest.txt";
+	
+	TermList terms;
+	Iterator<Term> sweep;
 
 	
-	public BruteAutocomplete()// throws IllegalArgumentException
+	public BruteAutocomplete(String path)// throws IllegalArgumentException
 	{
-		terms.readTerms();
+		terms = new TermList(path);
 		sweep = terms.getAllTerms().iterator();
 	}
 	
