@@ -4,10 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
 import com.google.common.base.Objects;
+
+import util.TermByWeightComparator;
+import util.TermByWordComparator;
 
 
 
@@ -15,6 +19,7 @@ public class TermList// implements Comparable<TermList>
 {
 	
 	private List<Term> allTerms; 
+	Comparator<Term> weightcomp = new TermByWeightComparator();
 	Term term; 
 	String path = "././data/terms.txt";
 	String testpath = "././data/termsTest.txt";
@@ -48,7 +53,7 @@ public class TermList// implements Comparable<TermList>
 			term.theTerm = tokens[1];
 			allTerms.add(term); //add the term to array
 		}
-		//Collections.sort(allTerms);
+		Collections.sort(allTerms, weightcomp);
 		System.out.println(allTerms.size());
 		rawTerms.close(); // Prevent leaks
 

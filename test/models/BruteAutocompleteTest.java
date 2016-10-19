@@ -32,13 +32,13 @@ public class BruteAutocompleteTest
 	@Test
 	public void testWeightOf()
 	{
-		String word = "burak";
-		assertEquals(brute.weightOf(word), 66666, 0.01);
-		String word2 = "burakadipo";
-		assertEquals(brute.weightOf(word2), 99999, 0.01);
+		String word = "hell";
+		assertEquals(brute.weightOf(word), 55555, 0.01);
+		String word2 = "headlamp";
+		assertEquals(brute.weightOf(word2), 00000, 0.01);
 		String word3 = "skskywgw";
 		assertEquals(brute.weightOf(word3), 0.0, 0.01);
-		String word4 = "wa";
+		String word4 = "matt";
 		assertEquals(brute.weightOf(word4), 0.0, 0.01);
 	}
 	
@@ -48,20 +48,20 @@ public class BruteAutocompleteTest
 	public void testBestMatch()
 	{
 		String top = "b";
-		assertEquals(brute.bestMatch(top), "burakadipo");
+		assertEquals(brute.bestMatch(top), "bummer");
 		
-		String top2 = "rak";
-		assertEquals(brute.bestMatch(top2), "euraka");
+		String top2 = "br";
+		assertEquals(brute.bestMatch(top2), "brothel");
 	}
 	
 	@Test
 	public void testMatches()
 	{
-		String prefix = "b";
+		String prefix = "hel";
 		int k = 3;
 		Iterable<String> tmiterable = brute.matches(prefix, k);
 		List<String> tmlist = Lists.newArrayList(tmiterable);
-		assertEquals(tmlist.toString(), "[burakadipo, burakadip, burakadi]");
+		assertEquals(tmlist.toString(), "[help, hell, hello]");
 	}
 //
 //	private void assertArrayEquals(Iterable<String> matches, String string)

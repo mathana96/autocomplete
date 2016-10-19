@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.w3c.dom.css.Counter;
+
+import com.google.common.base.Preconditions;
 import com.google.common.collect.FluentIterable;
 
 import models.Term;
@@ -14,102 +17,98 @@ public class BruteAutocomplete implements Autocomplete
 {
 	
 	TermList terms = new TermList();
-	List<Term> sweep = terms.getAllTerms();//.iterator();
+	Iterator<Term> sweep;// = terms.getAllTerms();//.iterator();
 
 	
-	public BruteAutocomplete() throws IllegalArgumentException
+	public BruteAutocomplete()// throws IllegalArgumentException
 	{
 		terms.readTerms();
+		sweep = terms.getAllTerms().iterator();
 	}
 	
 	@Override
 	public double weightOf(String inputTerm)
 	{
-		for (Term t: sweep)
+		while (sweep.hasNext())
 		{
-		  if (t.theTerm.toLowerCase().contentEquals(inputTerm.toLowerCase()))
-		  {
-		  	return t.weight;
-		  }
-
+			Term t = sweep.next();
+			if (t.theTerm.toLowerCase().contentEquals(inputTerm.toLowerCase()))//
+			{
+				return t.weight;
+			}
 		}
-//		while (sweep.hasNext())
-//		{
-//			if (sweep.next().theTerm.toLowerCase().contentEquals(inputTerm.toLowerCase()))//
-//			{
-//				return sweep.next().weight;
-//			}
-//		}
 		return 0.0;
+		
+//	for (Term t: sweep)
+//	{
+//	  if (t.theTerm.toLowerCase().contentEquals(inputTerm.toLowerCase()))
+//	  {
+//	  	return t.weight;
+//	  }
+//
+//	}
 	}
 
 	@Override
 	public String bestMatch(String prefix)
 	{
-		Iterable<String> bestList = this.matches(prefix, 1);
-		//bestTerm.iterator().remove();
-		return bestList.iterator().next();//bestTerm.iterator().next();
+		String bestTerm = "";
+		while (sweep.hasNext())
+		{
+			Term t = sweep.next();
+			
+			if(t.theTerm.toLowerCase().startsWith(prefix.toLowerCase()))
+			{
+				bestTerm += t.theTerm;
+				break;
+			}
+
+		}
+		return bestTerm;
 	}
 	
 	
 	@Override
 	public Iterable<String> matches(String prefix, int k)
 	{
-		List<Term> shortlist = new ArrayList<>();
-		List<String> sortedlist = new ArrayList<>();
-		List<String> kList;
 		
-		for (Term t: sweep)
+		Preconditions.checkArgument(k > 0, "Negative/Zero value: %s", k);
+		 
+		List<String> shortlist = new ArrayList<>();		
+		int ctr = 0;
+		
+		while (sweep.hasNext() && ctr < k)
 		{
-			if (t.theTerm.toLowerCase().contains(prefix.toLowerCase()))
+			Term t = sweep.next();
+			if (t.theTerm.toLowerCase().startsWith(prefix.toLowerCase()))//
 			{
-				shortlist.add(t);
+				shortlist.add(t.theTerm);
+				ctr++;
 			}
-
 		}
-//		while (sweep.hasNext())
-//		{
-//			if (sweep.next().theTerm.toLowerCase().contains(prefix.toLowerCase()))//
-//			{
-//				shortlist.add(sweep.next());
-//			}
-//		}
-		Collections.sort(shortlist);
-		
-		for (Term shortTerm: shortlist)
-		{
-			sortedlist.add(shortTerm.theTerm);
-		}
-		
-		//return null;
-		
-		if (shortlist.size() >= k)
-		{
-
-			kList = FluentIterable.from(sortedlist).limit(k).toList();
-			return kList;
-		}
-		else
-		{
-			return sortedlist;
-		}
+		return shortlist;
 		
 	}
-	
-//	@Override
-//	public int compare(Term o1) {
-//		 if      (this.count < that.count) return -1;
-//	     else if (this.count > that.count) return +1;
-//	     else                              return  0;
-//	}
-
-	
-
-//	@Override
-//	public int compareTo(Term o)
-//	{
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
 
 }
+
+//
+//Collections.sort(shortlist);
+//
+//for (Term shortTerm: shortlist)
+//{
+//	sortedlist.add(shortTerm.theTerm);
+//}
+//if (shortlist.size() >= k)
+//{
+//
+//	kList = FluentIterable.from(sortedlist).limit(k).toList();
+//	return kList;
+//}
+//else
+//{
+//	return sortedlist;
+//}
+
+
+
