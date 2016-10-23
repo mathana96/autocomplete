@@ -45,9 +45,9 @@ public class BruteAutocomplete implements Autocomplete
 	@Override
 	public String bestMatch(String prefix)
 	{
-		Preconditions.checkNotNull(prefix, "Empty/Null String");
+		//Preconditions.checkNotNull(prefix, "Empty/Null String");
 		String bestTerm = null;
-		while (sweep.hasNext())
+		while (sweep.hasNext() && prefix.length() > 0)
 		{
 			Term t = sweep.next();
 			
@@ -65,13 +65,13 @@ public class BruteAutocomplete implements Autocomplete
 	@Override
 	public Iterable<String> matches(String prefix, int k)
 	{
-		Preconditions.checkNotNull(prefix, "Empty/Null String");
+		//Preconditions.checkNotNull(prefix, "Empty/Null String");
 		Preconditions.checkArgument(k > 0, "Negative/Zero value: %s", k);
 		 
 		List<String> shortlist = new ArrayList<>();		
 		int ctr = 0;
 		
-		while (sweep.hasNext() && ctr < k)
+		while (sweep.hasNext() && ctr < k && prefix.length() > 0)
 		{
 			Term t = sweep.next();
 			if (t.theTerm.toLowerCase().startsWith(prefix.toLowerCase()))//

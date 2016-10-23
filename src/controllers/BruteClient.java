@@ -26,12 +26,12 @@ public class BruteClient
 	String testpath = "././data/termsTest.txt";
 	BruteAutocomplete brute;
 	DecimalFormat df = new DecimalFormat("0", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
-	
-	
+
+
 	public static void main(String[] args)
 	{
 		BruteClient bruteClient = new BruteClient();
-		
+
 		bruteClient.run();
 	}
 
@@ -51,10 +51,12 @@ public class BruteClient
 				"Please select an option", JOptionPane.QUESTION_MESSAGE, null, // Use default icon
 				choices, // Array of choices
 				choices[0]); // Initial choice
-		
-		
-		switch(input)
+
+		if (input != null) 
 		{
+  		switch(input)
+  		{
+  		
   		case "Weight of a term":
   			String input1 = JOptionPane.showInputDialog(null, "Enter term");
   			JOptionPane.showMessageDialog ( 
@@ -62,31 +64,33 @@ public class BruteClient
   					JOptionPane.PLAIN_MESSAGE); 
   			break;
   
+  			
+  			
   		case "Best matching term":
   			String input2 = JOptionPane.showInputDialog(null, "Enter prefix");
-  
   			JOptionPane.showMessageDialog ( 
   					null, "Best match: \n" + brute.bestMatch(input2) + "\n\nNote: Term not found if null", "Results", 
   					JOptionPane.PLAIN_MESSAGE); 
   			break;
   
-  		case "List of matching terms":
   			
+  			
+  		case "List of matching terms":
+  
   			JTextField term = new JTextField();
   			JTextField k = new JTextField();
   			Object[] message = {
-  			    "Enter prefix:", term,
-  			    "Num of results:", k
+  					"Enter prefix:", term,
+  					"Num of results:", k
   			};
-
   			JOptionPane.showConfirmDialog(null, message);
   
   			JOptionPane.showMessageDialog ( 
   					null, "List of matches: \n" + brute.matches(term.getText(), Integer.parseInt(k.getText())) + "\n\nNote: Term(s) not found if null or []", "Results", 
   					JOptionPane.PLAIN_MESSAGE); 
   			break;
-  			
-  			//default:
+  
+  		}
 		}
 		System.exit(0);
 	}
