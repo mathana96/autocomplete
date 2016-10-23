@@ -5,13 +5,14 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
-import com.google.common.base.Objects;
 
 import util.TermByWeightComparator;
-import util.TermByWordComparator;
+
 
 
 
@@ -19,12 +20,12 @@ public class TermList// implements Comparable<TermList>
 {
 	
 	private List<Term> allTerms; 
+	Set<Term> uniqueSet = new HashSet<>();
 	Comparator<Term> weightcomp = new TermByWeightComparator();
+	String delimiter = "	"; // Delimiter - a tab space
 	
 	public TermList(String path)
 	{
-		allTerms = new ArrayList<>();
-	
 		File termsFile = new File(path); //The file
 		Scanner rawTerms = null;
 		try
@@ -39,12 +40,10 @@ public class TermList// implements Comparable<TermList>
 		// While there is a next term..
 		while (rawTerms.hasNextLine())
 		{
-			Term term = new Term();
-			String[] tokens = rawTerms.nextLine().split(term.delimiter);
-			term.weight = Double.parseDouble(tokens[0]);
-			term.theTerm = tokens[1];
-			allTerms.add(term); //add the term to array
+			String[] tokens = rawTerms.nextLine().trim().split(delimiter);
+			uniqueSet.add(new Term(Double.parseDouble(tokens[0]), tokens[1])); //add the term to set
 		}
+		allTerms = new ArrayList<>(uniqueSet);
 		Collections.sort(allTerms, weightcomp);
 		System.out.println(allTerms.size());
 		rawTerms.close(); // Prevent leaks
@@ -66,18 +65,12 @@ public class TermList// implements Comparable<TermList>
 		return allTerms.get(i);
 	}
 
-//	@Override
-//	public int compareTo(TermList o)
-//	{
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
 	
 
 }
 
 
-//String delimiters = "	"; // Delimiter - a tab space
+
 //String[] termTokens = term.split(delimiters); // Split it according to
 // specified delimiter
 

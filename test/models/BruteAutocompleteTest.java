@@ -23,7 +23,7 @@ public class BruteAutocompleteTest
 	public void setup()
 	{
 		brute = new BruteAutocomplete(testpath);
-	  termList = new TermList(testpath);
+	  //termList = new TermList(testpath);
 	}
 	
 	@After
@@ -41,7 +41,7 @@ public class BruteAutocompleteTest
 		assertEquals(brute.weightOf(word2), 00000, 0.01);
 		String word3 = "skskywgw";
 		assertEquals(brute.weightOf(word3), 0.0, 0.01);
-		String word4 = "matt";
+		String word4 = ".,,@@";
 		assertEquals(brute.weightOf(word4), 0.0, 0.01);
 	}
 	
@@ -55,10 +55,15 @@ public class BruteAutocompleteTest
 		
 		String top2 = "br";
 		assertEquals(brute.bestMatch(top2), "brothel");
+		
+		String top3 = ",.,.";
+		assertEquals(brute.bestMatch(top3), null);
+		
+		
 	}
 	
 	@Test
-	public void testMatches1()
+	public void testMatches()
 	{
 		String prefix = "hel";
 		int k = 3;
@@ -66,22 +71,39 @@ public class BruteAutocompleteTest
 		List<String> tmlist = Lists.newArrayList(tmiterable);
 		assertEquals(tmlist.toString(), "[help, hell, hello]");
 		
-		String prefix2 = "hex";
-		int k2 = 5;
-		Iterable<String> tmiterable2 = brute.matches(prefix2, k2);
-		List<String> tmlist2 = Lists.newArrayList(tmiterable2);
-		assertEquals(tmlist2.toString(), "[hexagon]");
+
 	}
 	
-	public void testMatches2()
+	@Test
+	public void testMatchesForK()
 	{
-		
-		String prefix2 = "sat";
-		int k2 = 5;
-		Iterable<String> tmiterable2 = brute.matches(prefix2, k2);
-		List<String> tmlist2 = Lists.newArrayList(tmiterable2);
-		assertEquals(tmlist2.toString(), "[satchel]");
+		String prefix3 = "sat";
+		int k3 = 5;
+		Iterable<String> tmiterable3 = brute.matches(prefix3, k3);
+		List<String> tmlist3 = Lists.newArrayList(tmiterable3);
+		assertEquals(tmlist3.toString(), "[satchel]");
 	}
+	
+	@Test
+	public void testMatchesForMiscInput()
+	{
+		String prefix3 = "£.,money.,££$$";
+		int k3 = 5;
+		Iterable<String> tmiterable3 = brute.matches(prefix3, k3);
+		List<String> tmlist3 = Lists.newArrayList(tmiterable3);
+		assertEquals(tmlist3.toString(), "[]");
+	}
+	
+//	@Test
+//	public void testMatchesForNullInput()
+//	{
+//		String prefix3 = "sat";
+//		int k3 = ;
+//		Iterable<String> tmiterable3 = brute.matches(prefix3, k3);
+//		List<String> tmlist3 = Lists.newArrayList(tmiterable3);
+//		assertNull(tmlist3, null);
+//		
+//	}
 
 
 }

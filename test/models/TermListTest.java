@@ -31,18 +31,27 @@ public class TermListTest
 	
 	
 	@Test
-	public void testTerms()
+	public void testSortedTerms()
 	{
 		
 		assertEquals(termList.getTerm(0).weight, 999990.0, 0.01); //tab as delimiter 
 		assertEquals(termList.getTerm(0).theTerm, "bummer"); //tab as delimiter 
-
+	}
+	
+	@Test
+	public void testTermsDelimiter()
+	{
 		assertNotEquals(termList.getTerm(5), "00000 headlamp"); //space as delimiter 
-		assertEquals(termList.getAllTerms().size(), 11);
+	}
+	
+	@Test
+	public void testNoDuplicates()
+	{
+		assertEquals(11, termList.getAllTerms().size());
 		
 		List<Term> testTerms = new ArrayList<>();
 		testTerms = termList.getAllTerms();
 		assertEquals(testTerms.size(), termList.getAllTerms().size());
 	}
-
+	
 }

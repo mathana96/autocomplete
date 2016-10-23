@@ -16,8 +16,6 @@ import models.TermList;
 public class BruteAutocomplete implements Autocomplete
 {
 	
-	//String path = "././data/terms.txt";
-	//String testpath = "././data/termsTest.txt";
 	
 	TermList terms;
 	Iterator<Term> sweep;
@@ -41,29 +39,22 @@ public class BruteAutocomplete implements Autocomplete
 			}
 		}
 		return 0.0;
-		
-//	for (Term t: sweep)
-//	{
-//	  if (t.theTerm.toLowerCase().contentEquals(inputTerm.toLowerCase()))
-//	  {
-//	  	return t.weight;
-//	  }
-//
-//	}
+
 	}
 
 	@Override
 	public String bestMatch(String prefix)
 	{
-		String bestTerm = "";
+		Preconditions.checkNotNull(prefix, "Empty/Null String");
+		String bestTerm = null;
 		while (sweep.hasNext())
 		{
 			Term t = sweep.next();
 			
 			if(t.theTerm.toLowerCase().startsWith(prefix.toLowerCase()))
 			{
-				bestTerm += t.theTerm;
-				break;
+				bestTerm = t.theTerm;
+				return bestTerm;
 			}
 
 		}
@@ -74,7 +65,7 @@ public class BruteAutocomplete implements Autocomplete
 	@Override
 	public Iterable<String> matches(String prefix, int k)
 	{
-		
+		Preconditions.checkNotNull(prefix, "Empty/Null String");
 		Preconditions.checkArgument(k > 0, "Negative/Zero value: %s", k);
 		 
 		List<String> shortlist = new ArrayList<>();		
