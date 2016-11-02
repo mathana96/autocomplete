@@ -2,54 +2,39 @@ package controllers;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.List;
 import java.util.Locale;
 
-//import javax.swing.JComboBox;
-
-/**
- * JOptionPane code adapted from 
- * http://www.java2s.com/Tutorial/Java/0240__Swing/Todisplaysadialogwithalistofchoicesinadropdownlistbox.htm
- * 
- * Decimal format adapted from 
- * http://stackoverflow.com/questions/16098046/how-to-print-double-value-without-scientific-notation-using-java
- * 
- * JTextField adpted from 
- * http://stackoverflow.com/questions/6555040/multiple-input-in-joptionpane-showinputdialog
- */
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.google.common.base.Preconditions;
 
 import edu.princeton.cs.introcs.Stopwatch;
-import models.Term;
 
-
-public class BruteClient
+public class QuickClient
 {
 	String path = "././data/terms.txt";
 	String testpath = "././data/termsTest.txt";
-	BruteAutocomplete brute;
+	QuickAutocomplete quick;
 	DecimalFormat df = new DecimalFormat("0", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
 
 
 	public static void main(String[] args) throws Exception
 	{
-		BruteClient bruteClient = new BruteClient();
+		QuickClient quickClient = new QuickClient();
 
-		bruteClient.run();
+		quickClient.run();
 	}
 
-	public BruteClient() throws Exception
+	public QuickClient() throws Exception
 	{
-		brute = new BruteAutocomplete(path);
+		quick = new QuickAutocomplete(path);
 		df.setMaximumFractionDigits(340);
 	}
 
 	public void run()
 	{	
-		JOptionPane.showMessageDialog(null, "Welcome to the BruteAutocomplete Client. \nClick OK to continue.", "Welcome", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, "Welcome to the QuickAutocomplete Client. \nClick OK to continue.", "Welcome", JOptionPane.PLAIN_MESSAGE);
 
 		String[] choices = { "Weight of a term", "Best matching term", "List of matching terms"};
 
@@ -67,9 +52,9 @@ public class BruteClient
 				String input1 = JOptionPane.showInputDialog(null, "Enter term");
 
 				Stopwatch stopwatch = new Stopwatch();
-				double weightOf = brute.weightOf(input1);
+				double weightOf = quick.weightOf(input1);
 				double time = stopwatch.elapsedTime(); 
-				System.out.println("Brute - weightOf - " + time);
+				System.out.println("Quick - weightOf - " + time);
 
 				JOptionPane.showMessageDialog ( 
 						null, "The weight is " + df.format(weightOf) + "\n\nNote: Term not found if weight 0.0", "Results", 
@@ -83,9 +68,9 @@ public class BruteClient
 				String input2 = JOptionPane.showInputDialog(null, "Enter prefix");
 				
 				Stopwatch stopwatch2 = new Stopwatch();
-				String bestMatch = brute.bestMatch(input2);
+				String bestMatch = quick.bestMatch(input2);
 				double time2 = stopwatch2.elapsedTime(); 
-				System.out.println("Brute - bestMatch - " + time2);
+				System.out.println("Quick - bestMatch - " + time2);
 				
 				JOptionPane.showMessageDialog ( 
 						null, "Best match: \n" + bestMatch + "\n\nNote: Term not found if null", "Results", 
@@ -107,9 +92,9 @@ public class BruteClient
 				Preconditions.checkArgument(k.getText().length() > 0, "Null value of k");
 				
 				Stopwatch stopwatch3 = new Stopwatch();
-				Iterable<String> matches = brute.matches(term.getText(), Integer.parseInt(k.getText()));
+				Iterable<String> matches = quick.matches(term.getText(), Integer.parseInt(k.getText()));
 				double time3 = stopwatch3.elapsedTime(); 
-				System.out.println("Brute - matches - " + time3);
+				System.out.println("Quick - matches - " + time3);
 				
 				JOptionPane.showMessageDialog ( 
 						null, "List of matches: \n" + matches + "\n\nNote: Term(s) not found if null or []", "Results", 
@@ -121,6 +106,3 @@ public class BruteClient
 		System.exit(0);
 	}
 }
-
-
-

@@ -24,7 +24,7 @@ public class TermList// implements Comparable<TermList>
 	Comparator<Term> weightcomp = new TermByWeightComparator();
 	String delimiter = "	"; // Delimiter - a tab space
 	
-	public TermList(String path)
+	public TermList(String path) throws Exception
 	{
 		File termsFile = new File(path); //The file
 		Scanner rawTerms = null;
@@ -41,10 +41,19 @@ public class TermList// implements Comparable<TermList>
 		while (rawTerms.hasNextLine())
 		{
 			String[] tokens = rawTerms.nextLine().trim().split(delimiter);
-			uniqueSet.add(new Term(Double.parseDouble(tokens[0]), tokens[1])); //add the term to set
+			if (tokens.length == 2) 
+			{				
+				uniqueSet.add(new Term(Double.parseDouble(tokens[0]), tokens[1])); //add the term to set
+	    }
+			else
+	    {
+	      rawTerms.close();
+	      throw new Exception("Invalid member length: "+ tokens.length);
+	    }
+			
 		}
-		allTerms = new ArrayList<>(uniqueSet);
-		Collections.sort(allTerms, weightcomp);
+		allTerms = new ArrayList<>(uniqueSet); //Covert set into an ArrayList
+		Collections.sort(allTerms, weightcomp); //Sort arraylist according to weight
 		System.out.println(allTerms.size());
 		rawTerms.close(); // Prevent leaks
 

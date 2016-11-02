@@ -12,8 +12,8 @@ public class TermTest
 	public void test()
 	{
 		term = new Term(6.789, "A string");
-		assertEquals(term.weight, 6.789, 0.01);
-		assertEquals(term.theTerm, "A string");
+		assertEquals(6.789, term.weight, 0.01);
+		assertEquals("A string", term.theTerm);
 	}
 
 }

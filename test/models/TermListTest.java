@@ -18,7 +18,7 @@ public class TermListTest
 	String testpath = "././data/termsTest.txt";
 	
 	@Before
-	public void setup()
+	public void setup() throws Exception
 	{
 		termList = new TermList(testpath);
 	}
@@ -34,20 +34,21 @@ public class TermListTest
 	public void testSortedTerms()
 	{
 		
-		assertEquals(termList.getTerm(0).weight, 999990.0, 0.01); //tab as delimiter 
-		assertEquals(termList.getTerm(0).theTerm, "bummer"); //tab as delimiter 
+		assertEquals(999990.0, termList.getTerm(0).weight, 0.01); 
+		assertEquals("bummer", termList.getTerm(0).theTerm);
 	}
 	
 	@Test
 	public void testTermsDelimiter()
 	{
-		assertNotEquals(termList.getTerm(5), "00000 headlamp"); //space as delimiter 
+		assertNotEquals("00000 headlamp", termList.getTerm(5)); //space as delimiter 
 	}
 	
 	@Test
 	public void testNoDuplicates()
 	{
-		assertEquals(11, termList.getAllTerms().size());
+		System.out.println(termList.getAllTerms());
+		assertEquals(12, termList.getAllTerms().size());
 		
 		List<Term> testTerms = new ArrayList<>();
 		testTerms = termList.getAllTerms();

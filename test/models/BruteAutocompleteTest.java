@@ -16,52 +16,49 @@ import controllers.BruteAutocomplete;
 public class BruteAutocompleteTest
 {
 	private BruteAutocomplete brute;
-	TermList termList;
 	String testpath = "././data/termsTest.txt";
-	
+
 	@Before
-	public void setup()
+	public void setup() throws Exception
 	{
 		brute = new BruteAutocomplete(testpath);
-	  //termList = new TermList(testpath);
 	}
-	
+
 	@After
 	public void tearDown()
 	{
 		brute = null;
 	}
-	
+
 	@Test
 	public void testWeightOf()
 	{
 		String word = "hell";
-		assertEquals(brute.weightOf(word), 55555, 0.01);
-		String word2 = "headlamp";
-		assertEquals(brute.weightOf(word2), 00000, 0.01);
+		assertEquals(55555, brute.weightOf(word), 0.01);
+		String word2 = "HeaDlamp";
+		assertEquals(00000, brute.weightOf(word2), 0.01);
 		String word3 = "skskywgw";
-		assertEquals(brute.weightOf(word3), 0.0, 0.01);
+		assertEquals(0.0, brute.weightOf(word3), 0.01);
 		String word4 = ".,,@@";
-		assertEquals(brute.weightOf(word4), 0.0, 0.01);
+		assertEquals(0.0, brute.weightOf(word4), 0.01);
 	}
-	
-	//MAKE SURE TO TEST THE OBJECTS.EQUAL BY NOT GIVING IMPLICIT VALUES!
-	
+
 	@Test
 	public void testBestMatch()
 	{
 		String top = "b";
-		assertEquals(brute.bestMatch(top), "bummer");
-		
+		assertEquals("bummer", brute.bestMatch(top));
+
 		String top2 = "br";
-		assertEquals(brute.bestMatch(top2), "brothel");
-		
+		assertEquals("brothel", brute.bestMatch(top2));
+
 		String top3 = ",.,.";
-		assertEquals(brute.bestMatch(top3), null);
+		assertEquals(null, brute.bestMatch(top3));
 		
-		
+
+
 	}
-	
+
 	@Test
 	public void testMatches()
 	{
@@ -69,41 +66,61 @@ public class BruteAutocompleteTest
 		int k = 3;
 		Iterable<String> tmiterable = brute.matches(prefix, k);
 		List<String> tmlist = Lists.newArrayList(tmiterable);
-		assertEquals(tmlist.toString(), "[help, hell, hello]");
-		
+		assertEquals("[help, hell, hello]", tmlist.toString());
+		assertEquals(3, tmlist.size());
+
 
 	}
-	
+
 	@Test
-	public void testMatchesForK()
+	public void testMatchesForLargeK()
 	{
-		String prefix3 = "sat";
-		int k3 = 5;
-		Iterable<String> tmiterable3 = brute.matches(prefix3, k3);
-		List<String> tmlist3 = Lists.newArrayList(tmiterable3);
-		assertEquals(tmlist3.toString(), "[satchel]");
+		String prefix2 = "sat";
+		int k2 = 5;
+		Iterable<String> tmiterable2 = brute.matches(prefix2, k2);
+		List<String> tmlist2 = Lists.newArrayList(tmiterable2);
+		assertEquals("[satchel]", tmlist2.toString());
+		assertEquals(1, tmlist2.size());
 	}
-	
+
+
 	@Test
 	public void testMatchesForMiscInput()
 	{
 		String prefix3 = "£.,money.,££$$";
-		int k3 = 5;
+		int k3 = 7;
 		Iterable<String> tmiterable3 = brute.matches(prefix3, k3);
 		List<String> tmlist3 = Lists.newArrayList(tmiterable3);
-		assertEquals(tmlist3.toString(), "[]");
+		assertEquals("[]", tmlist3.toString());
+		assertEquals(0, tmlist3.size());
 	}
-	
-//	@Test
-//	public void testMatchesForNullInput()
-//	{
-//		String prefix3 = "sat";
-//		int k3 = ;
-//		Iterable<String> tmiterable3 = brute.matches(prefix3, k3);
-//		List<String> tmlist3 = Lists.newArrayList(tmiterable3);
-//		assertNull(tmlist3, null);
-//		
-//	}
+
+
+	@Test (expected = Exception.class)
+	public void testExceptions()
+	{
+		//weightOf
+		String inputTerm = null;
+		brute.weightOf(inputTerm);
+		
+		//bestMatch
+		String top4 = null;
+		brute.bestMatch(top4);
+
+		//matches
+		String prefix3 = null;
+		int k3 = -1;
+		brute.matches(prefix3, k3);
+		
+		String prefix4 = null;
+		String k4 = null;
+		brute.matches(prefix4, Integer.parseInt(k4));
+		
+		String prefix5 = "pop";
+		String k5 = null;
+		brute.matches(prefix5, Integer.parseInt(k5));
+
+	}
 
 
 }

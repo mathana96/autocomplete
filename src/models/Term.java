@@ -15,36 +15,36 @@ public class Term// implements Comparable<Term>
 		this.weight = weight;
 		this.theTerm = theTerm;
 	}
-	
-	@Override  
-  public int hashCode()  
-  {  
-     return Objects.hashCode(weight, theTerm);  
-  }
-	
+
+
 	@Override
 	public boolean equals(final Object obj)
 	{
 		if (obj instanceof Term)
 		{
 
-			final Term other = (Term)obj;
-			return Objects.equal(weight, other.weight)
-					&& Objects.equal(theTerm, other.theTerm);
-
+			final Term other = (Term) obj;
+			return Objects.equal(this.theTerm, other.theTerm);
 		}
 		else
 		{
 			return false;
 		}
 	}
-	
-	 public String toString()
-	  {
-	    return toStringHelper(this).addValue(weight)
-	                               .addValue(theTerm).toString();
-	                              
-	  }
-	
+
+	@Override
+	public String toString()
+	{
+		return toStringHelper(this).addValue(weight)
+				.addValue(theTerm).toString();
+
+	}
+
+	@Override  
+	public int hashCode()  
+	{  
+		return Objects.hashCode(this.theTerm);  
+	}
+
 
 }
