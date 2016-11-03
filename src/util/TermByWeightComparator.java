@@ -1,3 +1,8 @@
+/**
+ * @author Mathana Sreedaran
+ * 
+ * Defining how Terms are sorted by weight
+ */
 package util;
 
 import java.util.Comparator;

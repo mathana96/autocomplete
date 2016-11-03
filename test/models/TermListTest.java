@@ -1,3 +1,9 @@
+/**
+ * @author Mathana Sreedaran
+ * 
+ * TermListTest ensures the terms are read in correctly from the file specified 
+ * and sorted as specified. Tested using test data
+ */
 package models;
 
 import static org.junit.Assert.*;
@@ -9,13 +15,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
-
 public class TermListTest
 {
 	
 	TermList termList;
-	String testpath = "././data/termsTest.txt";
+	String testpath = "././data/termsTest.txt"; //Test data
 	
 	@Before
 	public void setup() throws Exception
@@ -34,7 +38,7 @@ public class TermListTest
 	public void testSortedTerms()
 	{
 		
-		assertEquals(999990.0, termList.getTerm(0).weight, 0.01); 
+		assertEquals(999999.0, termList.getTerm(0).weight, 0.01); 
 		assertEquals("bummer", termList.getTerm(0).theTerm);
 	}
 	
@@ -47,7 +51,6 @@ public class TermListTest
 	@Test
 	public void testNoDuplicates()
 	{
-		System.out.println(termList.getAllTerms());
 		assertEquals(12, termList.getAllTerms().size());
 		
 		List<Term> testTerms = new ArrayList<>();

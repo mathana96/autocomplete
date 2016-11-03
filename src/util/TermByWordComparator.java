@@ -1,3 +1,8 @@
+/**
+ * @author Mathana Sreedaran
+ * 
+ * Sorts theTerm of Term alphabetically 
+ */
 package util;
 
 import java.util.Comparator;

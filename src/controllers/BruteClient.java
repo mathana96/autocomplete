@@ -1,13 +1,8 @@
-package controllers;
-
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.List;
-import java.util.Locale;
-
-//import javax.swing.JComboBox;
-
 /**
+ * @author Mathana Sreedaran
+ * 
+ * BruteClient acts as a user client to interact with the BruteAutocomplete class. 
+ * 
  * JOptionPane code adapted from 
  * http://www.java2s.com/Tutorial/Java/0240__Swing/Todisplaysadialogwithalistofchoicesinadropdownlistbox.htm
  * 
@@ -17,21 +12,27 @@ import java.util.Locale;
  * JTextField adpted from 
  * http://stackoverflow.com/questions/6555040/multiple-input-in-joptionpane-showinputdialog
  */
+package controllers;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.google.common.base.Preconditions;
 
 import edu.princeton.cs.introcs.Stopwatch;
-import models.Term;
+
 
 
 public class BruteClient
 {
-	String path = "././data/terms.txt";
-	String testpath = "././data/termsTest.txt";
-	BruteAutocomplete brute;
-	DecimalFormat df = new DecimalFormat("0", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+	String path = "././data/terms.txt"; //Path to file containing data
+	//String testpath = "././data/termsTest.txt";
+	BruteAutocomplete brute; //Object of BruteAutocomplete class
+	DecimalFormat df = new DecimalFormat("0", DecimalFormatSymbols.getInstance(Locale.ENGLISH)); //Formating decimal to prevent scientific notation
 
 
 	public static void main(String[] args) throws Exception
@@ -44,13 +45,15 @@ public class BruteClient
 	public BruteClient() throws Exception
 	{
 		brute = new BruteAutocomplete(path);
-		df.setMaximumFractionDigits(340);
+		df.setMaximumFractionDigits(340); //Preventing scientific notation 
 	}
 
 	public void run()
 	{	
+		//Welcome dialog box
 		JOptionPane.showMessageDialog(null, "Welcome to the BruteAutocomplete Client. \nClick OK to continue.", "Welcome", JOptionPane.PLAIN_MESSAGE);
-
+		
+		//List of choices (methods)
 		String[] choices = { "Weight of a term", "Best matching term", "List of matching terms"};
 
 		String input = (String) JOptionPane.showInputDialog(null, "Operation modes",
@@ -64,13 +67,14 @@ public class BruteClient
 			{
 
 			case "Weight of a term":
-				String input1 = JOptionPane.showInputDialog(null, "Enter term");
+				String input1 = JOptionPane.showInputDialog(null, "Enter term"); //Prompt input
 
-				Stopwatch stopwatch = new Stopwatch();
-				double weightOf = brute.weightOf(input1);
-				double time = stopwatch.elapsedTime(); 
-				System.out.println("Brute - weightOf - " + time);
+				Stopwatch stopwatch = new Stopwatch(); //Initialise timer
+				double weightOf = brute.weightOf(input1); //Do method
+				double time = stopwatch.elapsedTime(); //Measure time
+				System.out.println("Brute - weightOf - " + time); //Output time to console
 
+				//Output dialog box
 				JOptionPane.showMessageDialog ( 
 						null, "The weight is " + df.format(weightOf) + "\n\nNote: Term not found if weight 0.0", "Results", 
 						JOptionPane.PLAIN_MESSAGE); 
@@ -80,12 +84,12 @@ public class BruteClient
 
 
 			case "Best matching term":
-				String input2 = JOptionPane.showInputDialog(null, "Enter prefix");
+				String input2 = JOptionPane.showInputDialog(null, "Enter prefix"); //Prompt input
 				
-				Stopwatch stopwatch2 = new Stopwatch();
-				String bestMatch = brute.bestMatch(input2);
-				double time2 = stopwatch2.elapsedTime(); 
-				System.out.println("Brute - bestMatch - " + time2);
+				Stopwatch stopwatch2 = new Stopwatch(); //Start timer
+				String bestMatch = brute.bestMatch(input2); //Do method
+				double time2 = stopwatch2.elapsedTime(); //Measure time
+				System.out.println("Brute - bestMatch - " + time2); //Print to console
 				
 				JOptionPane.showMessageDialog ( 
 						null, "Best match: \n" + bestMatch + "\n\nNote: Term not found if null", "Results", 

@@ -1,3 +1,11 @@
+/**
+ * @author Mathana Sreedaran
+ * TermList class reads in terms from a file in the project structure using a 
+ * specified path. The terms are split into two tokens - weight and theTerm - 
+ * and stored as objects of the Term class in a List. A HashSet is used to prevent
+ * duplicate Term values, determined using the equals() and hashcode() methods in 
+ * Term class. Final List is sorted alphabetically. 
+ */
 package models;
 
 import java.io.File;
@@ -13,10 +21,7 @@ import java.util.Set;
 
 import util.TermByWeightComparator;
 
-
-
-
-public class TermList// implements Comparable<TermList>
+public class TermList
 {
 	
 	private List<Term> allTerms; 
@@ -54,7 +59,6 @@ public class TermList// implements Comparable<TermList>
 		}
 		allTerms = new ArrayList<>(uniqueSet); //Covert set into an ArrayList
 		Collections.sort(allTerms, weightcomp); //Sort arraylist according to weight
-		System.out.println(allTerms.size());
 		rawTerms.close(); // Prevent leaks
 
 	}
@@ -63,7 +67,6 @@ public class TermList// implements Comparable<TermList>
 	{
 		return allTerms;
 	}
-	
 	public int getTermsSize()
 	{
 		return allTerms.size();
@@ -74,23 +77,6 @@ public class TermList// implements Comparable<TermList>
 		return allTerms.get(i);
 	}
 
-	
-
 }
 
 
-
-//String[] termTokens = term.split(delimiters); // Split it according to
-// specified delimiter
-
-//if (termTokens.length == 2) // If the split was successful, print it out
-//{
-//	
-//	System.out.println();
-//
-//} 
-//else // Throw an exception
-//{
-//	rawTerms.close();
-//	throw new Exception("Invalid term length " + termTokens.length);
-//}

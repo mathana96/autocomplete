@@ -1,3 +1,8 @@
+/**
+ * @author Mathana Sreedaran
+ * 
+ * BruteAutocompleteTest carries out tests for the BruteAutocomplete class. Tests done using test data
+ */
 package models;
 
 import static org.junit.Assert.*;
@@ -16,7 +21,7 @@ import controllers.BruteAutocomplete;
 public class BruteAutocompleteTest
 {
 	private BruteAutocomplete brute;
-	String testpath = "././data/termsTest.txt";
+	String testpath = "././data/termsTest.txt"; //Path to test data
 
 	@Before
 	public void setup() throws Exception
@@ -34,28 +39,27 @@ public class BruteAutocompleteTest
 	public void testWeightOf()
 	{
 		String word = "hell";
-		assertEquals(55555, brute.weightOf(word), 0.01);
+		assertEquals(55555, brute.weightOf(word), 0.01); //standard input
 		String word2 = "HeaDlamp";
-		assertEquals(00000, brute.weightOf(word2), 0.01);
+		assertEquals(00000, brute.weightOf(word2), 0.01); //Mix case
 		String word3 = "skskywgw";
-		assertEquals(0.0, brute.weightOf(word3), 0.01);
+		assertEquals(0.0, brute.weightOf(word3), 0.01); //Random characters
 		String word4 = ".,,@@";
-		assertEquals(0.0, brute.weightOf(word4), 0.01);
+		assertEquals(0.0, brute.weightOf(word4), 0.01); //Misc input
 	}
 
 	@Test
 	public void testBestMatch()
 	{
 		String top = "b";
-		assertEquals("bummer", brute.bestMatch(top));
+		assertEquals("bummer", brute.bestMatch(top)); //standard input
 
 		String top2 = "br";
-		assertEquals("brothel", brute.bestMatch(top2));
+		assertEquals("brothel", brute.bestMatch(top2)); //standard input
 
 		String top3 = ",.,.";
-		assertEquals(null, brute.bestMatch(top3));
+		assertEquals(null, brute.bestMatch(top3)); //Misc input
 		
-
 
 	}
 
@@ -68,8 +72,6 @@ public class BruteAutocompleteTest
 		List<String> tmlist = Lists.newArrayList(tmiterable);
 		assertEquals("[help, hell, hello]", tmlist.toString());
 		assertEquals(3, tmlist.size());
-
-
 	}
 
 	@Test
@@ -96,6 +98,7 @@ public class BruteAutocompleteTest
 	}
 
 
+	//Test for null
 	@Test (expected = Exception.class)
 	public void testExceptions()
 	{

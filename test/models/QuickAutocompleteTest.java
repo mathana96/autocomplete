@@ -1,10 +1,19 @@
+/**
+ * @author Mathana Sreedaran
+ * 
+ * QuickAutocompleteTest tests the functions of the QuickAutocomplete class. Test data is used 
+ */
 package models;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.google.common.collect.Lists;
 
 import controllers.QuickAutocomplete;
 
@@ -25,21 +34,8 @@ public class QuickAutocompleteTest
 		quick = null;
 	}
 
-	//@Test
-	public void testBestMatch()
-	{
-		String top = "b";
-		assertEquals("bummer", quick.bestMatch(top));
-
-		//		String top2 = "br";
-		//		assertEquals(quick.bestMatch(top2), "brothel");
-
-		//		String top3 = "hec";
-		//		assertEquals(quick.bestMatch(top3), null);
-	}
-
 	@Test
-	public void testWeightOf()
+	public void testWeightOf() //Word found in the list
 	{
 		String word = "hello";
 		assertEquals(44444, quick.weightOf(word), 0.01);
@@ -47,24 +43,112 @@ public class QuickAutocompleteTest
 	}	
 
 	@Test
-	public void testWeightOf2()
+	public void testWeightOf2() //Word found in the list
 	{
 		String word2 = "headlamp";
 		assertEquals(00000, quick.weightOf(word2), 0.01);
 	}
 
 	@Test
-	public void testWeightOf3()
+	public void testWeightOf3() //Random letters
 	{
 		String word3 = "skskywgw";
 		assertEquals(0.0, quick.weightOf(word3), 0.01);
 	}
-	
+
 	@Test
-	public void testWeightOf4()
+	public void testWeightOf4() //Misc characters 
 	{
-				String word4 = ".,,@@";
-				assertEquals(0.0, quick.weightOf(word4), 0.01);
+		String word4 = ".,,@@";
+		assertEquals(0.0, quick.weightOf(word4), 0.01);
 	}
 
+	@Test
+	public void testBestMatch() //Words with prefix found in list
+	{
+		String top = "b";
+		assertEquals("bummer", quick.bestMatch(top));
+	}
+
+	@Test
+	public void testBestMatch2()  //Words with prefix found in list
+	{
+		String top2 = "s";
+		assertEquals("satchel", quick.bestMatch(top2));
+
+	}
+	
+	@Test
+	public void testBestMatch3()  //Words with prefix found in list
+	{
+		String top3 = "hel";
+		assertEquals("help", quick.bestMatch(top3));
+
+	}
+	@Test
+	public void testBestMatch4()  //Misc input
+	{
+		String top4 = "%^*";
+		assertEquals(null, quick.bestMatch(top4));
+	}
+	
+	@Test
+	public void testMatches()
+	{
+		String prefix = "hel";
+		int k = 3;
+		Iterable<String> tmiterable = quick.matches(prefix, k);
+		List<String> tmlist = Lists.newArrayList(tmiterable);
+		assertEquals("[help, hell, hello]", tmlist.toString());
+		assertEquals(3, tmlist.size());
+	}
+	
+	@Test
+	public void testMatchesForLargeK()
+	{
+		String prefix2 = "sat";
+		int k2 = 5;
+		Iterable<String> tmiterable2 = quick.matches(prefix2, k2);
+		List<String> tmlist2 = Lists.newArrayList(tmiterable2);
+		assertEquals("[satchel]", tmlist2.toString());
+		assertEquals(1, tmlist2.size());
+	}
+	
+	@Test
+	public void testMatchesForMiscInput()
+	{
+		String prefix3 = "%$£";
+		int k3 = 7;
+		Iterable<String> tmiterable3 = quick.matches(prefix3, k3);
+		List<String> tmlist3 = Lists.newArrayList(tmiterable3);
+		assertEquals("[]", tmlist3.toString());
+		assertEquals(0, tmlist3.size());
+	}
+	
+	//Null input test
+	@Test (expected = Exception.class)
+	public void testExceptions()
+	{
+		//weightOf
+		String inputTerm = null;
+		quick.weightOf(inputTerm);
+		
+		//bestMatch
+		String top4 = null;
+		quick.bestMatch(top4);
+
+		//matches
+		String prefix3 = null;
+		int k3 = -1;
+		quick.matches(prefix3, k3);
+		
+		String prefix4 = null;
+		String k4 = null;
+		quick.matches(prefix4, Integer.parseInt(k4));
+		
+		String prefix5 = "pop";
+		String k5 = null;
+		quick.matches(prefix5, Integer.parseInt(k5));
+
+	}
 }

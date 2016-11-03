@@ -1,10 +1,15 @@
+/**
+ * @author Mathana Sreedaran
+ * 
+ * Term class defines a term stored in TermList with weight and theTerm attributes
+ */
 package models;
 
 import com.google.common.base.Objects;
 import static com.google.common.base.MoreObjects.toStringHelper;
 
 
-public class Term// implements Comparable<Term>
+public class Term
 {
 
 	public double weight;
