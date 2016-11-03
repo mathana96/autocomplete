@@ -13,7 +13,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.FluentIterable;
 
 import models.Term;
 import models.TermList;
@@ -228,8 +227,7 @@ public class QuickAutocomplete implements Autocomplete
 		}
 		else
 		{
-			List<String> slicedList = FluentIterable.from(shortList).limit(k).toList(); //Slice list based on k
-			return slicedList;
+			return shortList.subList(0, k);
 		}
 		
 	}
