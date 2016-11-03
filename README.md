@@ -44,4 +44,5 @@ A test data set was used to test the functionality of both BruteAutocomplete and
 
 ### Known bugs ###
 
-* QuickClient - bestMatch method - Will not return bestmatch for input "m", possibly other input
+* QuickClient - bestMatch method - Does not return bestmatch for input "m", possibly other input
+* BruteClient - bestMatch method - Does not return results for numeric inputs greater than 1 digit. For example, 999, but works for 9
